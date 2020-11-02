@@ -8,4 +8,7 @@
   max-width: var(--container-size);
   margin: auto;
   padding: 18px 12px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
