@@ -4,6 +4,8 @@ import { useForm } from 'react-hook-form'
 import { getInputFieldError } from '../../utils'
 import { schema } from './form-validation'
 import { yupResolver } from '@hookform/resolvers/yup'
+import { Link } from 'react-router-dom'
+import Title from '../../components/Title'
 import './login.css'
 
 interface LoginData {
@@ -21,36 +23,39 @@ function Login() {
   }
 
   return (
-    <section className="login-container">
-      <form className="login-form" onSubmit={handleSubmit(onFormSubmit)}>
-        <InputField
-          required
-          name="username"
-          placeholder="Username"
-          onInput={e => {
-            const input = e.target as HTMLInputElement
-            input.value = input.value.replace(/\s+/g, '')
-          }}
-          ref={register({ required: true })}
-          errors={getInputFieldError(errors.username)}
-        />
-        <InputField
-          type="password"
-          required
-          name="password"
-          placeholder="Password"
-          ref={register({ required: true })}
-          errors={getInputFieldError(errors.password)}
-        />
-        <button className="btn primary">Entrar</button>
-      </form>
+    <>
+      <Title />
+      <section className="login-container">
+        <form className="login-form" onSubmit={handleSubmit(onFormSubmit)}>
+          <InputField
+            required
+            name="username"
+            placeholder="Username"
+            onInput={e => {
+              const input = e.target as HTMLInputElement
+              input.value = input.value.replace(/\s+/g, '')
+            }}
+            ref={register({ required: true })}
+            errors={getInputFieldError(errors.username)}
+          />
+          <InputField
+            type="password"
+            required
+            name="password"
+            placeholder="Password"
+            ref={register({ required: true })}
+            errors={getInputFieldError(errors.password)}
+          />
+          <button className="btn primary">Entrar</button>
+        </form>
 
-      <button className="btn link">Esqueceu a senha?</button>
-      <p>
-        Não possui registro?&nbsp;
-        <span className="btn link">Registrar-se</span>
-      </p>
-    </section>
+        <button className="btn link">Esqueceu a senha?</button>
+        <p>
+          Não possui registro?&nbsp;
+          <Link to="/register" className="btn link">Registrar-se</Link>
+        </p>
+      </section>
+    </>
   )
 }
 

@@ -2,12 +2,16 @@ import React from 'react'
 import './title.css'
 import BirdImage from '../../assets/img/bird.png'
 
-function Title() {
+interface TitleProps {
+  showImg?: boolean
+}
+
+function Title({ showImg = true }: TitleProps) {
   return (
     <header className="header">
       <div className="header-container">
         <h1>Hear Story</h1>
-        <img src={BirdImage} alt="Singing Bird" />
+        {showImg && <img src={BirdImage} alt="Singing Bird" />}
       </div>
     </header>
   )
