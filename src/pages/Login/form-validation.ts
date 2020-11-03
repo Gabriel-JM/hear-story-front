@@ -3,9 +3,9 @@ import * as yup from 'yup'
 const schema = yup.object().shape({
   username: yup.string()
     .trim()
-    .required('Required Field'),
+    .required('Campo obrigatório.'),
   password: yup.string()
-    .required('Required Field')
+    .required('Campo obrigatório.')
 })
 
 export { schema }

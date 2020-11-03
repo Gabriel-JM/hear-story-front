@@ -22,16 +22,11 @@ function Login() {
 
   return (
     <section className="login-container">
-      <header className="login-header">
-        <h3>Login</h3>
-      </header>
-
       <form className="login-form" onSubmit={handleSubmit(onFormSubmit)}>
         <InputField
-          label="Username"
           required
           name="username"
-          placeholder="example.name"
+          placeholder="Username"
           onInput={e => {
             const input = e.target as HTMLInputElement
             input.value = input.value.replace(/\s+/g, '')
@@ -40,16 +35,14 @@ function Login() {
           errors={getInputFieldError(errors.username)}
         />
         <InputField
-          label="Password"
           type="password"
           required
           name="password"
-          placeholder="secret_password"
+          placeholder="Password"
           ref={register({ required: true })}
           errors={getInputFieldError(errors.password)}
         />
-        <span>* required fields.</span>
-        <button className="btn primary">Login</button>
+        <button className="btn primary">Entrar</button>
       </form>
     </section>
   )

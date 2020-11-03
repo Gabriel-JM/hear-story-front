@@ -8,7 +8,7 @@ interface InputError {
 }
 
 interface InputFieldProps extends InputHTMLAttributes<HTMLInputElement> {
-  label: string
+  label?: string
   errors?: InputError
 }
 
@@ -49,16 +49,18 @@ const InputField: ForwardRefRenderFunction<HTMLInputElement, InputFieldProps> = 
   return (
     <label className="input-container">
       <span
-        className={required ? 'required' : ''}
-      >{label}</span>
-      <div className="input-field">
+        className={label && required ? 'required' : ''}
+      >{label && label}</span>
+      <div className={'input-field' + (fieldError ? ' error' : '')}>
         <input
-          className={fieldError ? 'error' : ''}
           ref={ref}
           {...inputProps}
           onInput={handleOnInput}
         />
-        {fieldError?.type && <InputErrorWarn message={fieldError.message} />}
+        {fieldError?.type
+          ? <InputErrorWarn message={fieldError.message} />
+          : <div className="empty"></div>
+        }
       </div>
     </label>
   )

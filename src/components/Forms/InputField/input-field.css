@@ -20,32 +20,37 @@
 }
 
 .input-field {
+  --input-border-color: #777;
+  border: 1px solid var(--input-border-color);
+  border-radius: 4px;
+  transition: all 0.4s;
   display: grid;
   grid-template-columns: auto 28px;
 }
 
 .input-field input {
-  --input-border-color: #777;
-
   width: auto;
-  padding: 6px 10px;
-  border: 1px solid var(--input-border-color);
+  padding: 10px 14px;
+  border: 0;
   border-radius: 4px;
   font-size: 0.82rem;
-  background-color: transparent;
-  transition: all 0.4s;
+  background-color: #f0f0f0;
 }
 
-.input-field input:focus {
+.input-field div.empty {
+  width: 30px;
+}
+
+.input-field:focus-within {
   --input-border-color: var(--main-blue);
   box-shadow: 0 0 0px 2.05px var(--main-blue-transparent);
 }
 
-.input-field input.error {
+.input-field.error {
   --input-border-color: var(--danger-red);
 }
 
-.input-field input.error:focus {
+.input-field.error:focus-within {
   box-shadow: 0 0 0px 2.05px var(--danger-red-transparent);
 }
 
