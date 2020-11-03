@@ -1,4 +1,6 @@
 .login-container {
+  --container-size: 500px;
+
   max-width: var(--container-size);
   margin: auto;
   margin-top: 50px;
@@ -37,4 +39,15 @@
   display: block;
   margin-top: 5px;
   width: 100%;
+}
+
+.login-container .btn.link {
+  color: var(--main-blue);
+  text-decoration: none;
+}
+
+.login-container button.btn.link,
+.login-container p {
+  font-size: 0.9rem;
+  margin-bottom: 10px;
 }

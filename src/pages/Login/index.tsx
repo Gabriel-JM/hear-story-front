@@ -44,6 +44,12 @@ function Login() {
         />
         <button className="btn primary">Entrar</button>
       </form>
+
+      <button className="btn link">Esqueceu a senha?</button>
+      <p>
+        Não possui registro?&nbsp;
+        <span className="btn link">Registrar-se</span>
+      </p>
     </section>
   )
 }

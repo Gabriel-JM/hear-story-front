@@ -82,6 +82,7 @@ button.btn.danger:disabled {
   border: 0;
   padding: 0;
   box-shadow: none;
+  color: var(--btn-color);
   text-decoration: underline;
 }
 

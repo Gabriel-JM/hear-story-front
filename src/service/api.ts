@@ -1,10 +1,12 @@
+const prefix = 'http://localhost:8000/api'
+
 export const api = {
   get(url: string, customHeaders?: RequestInit) {
-    return request(url, 'get', undefined, customHeaders)
+    return request(prefix + url, 'get', undefined, customHeaders)
   },
 
   post(url: string, content: object, customHeaders?: RequestInit) {
-    return request(url, 'post', content, customHeaders)
+    return request(prefix + url, 'post', content, customHeaders)
   }
 }
 
