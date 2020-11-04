@@ -5,9 +5,10 @@ import InputField from '../../components/Forms/InputField'
 import { schema } from './form-validation'
 import { getInputFieldError } from '../../utils'
 import Title from '../../components/Title'
+import { useHistory } from 'react-router-dom'
+import { api } from '../../service/api'
 
 import './register.css'
-import { api } from '../../service/api'
 
 interface RegisterData {
   name: string
@@ -20,6 +21,7 @@ interface RegisterData {
 }
 
 function Register() {
+  const history = useHistory()
   const { register, handleSubmit, errors } = useForm<RegisterData>({
     resolver: yupResolver(schema)
   })
@@ -34,6 +36,7 @@ function Register() {
       const response = await api.post('/signup', data)
 
       console.log(response)
+      history.push('/')
     } catch(err) {
       console.log(err)
     }

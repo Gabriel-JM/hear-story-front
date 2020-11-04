@@ -4,8 +4,10 @@ import { useForm } from 'react-hook-form'
 import { getInputFieldError } from '../../utils'
 import { schema } from './form-validation'
 import { yupResolver } from '@hookform/resolvers/yup'
-import { Link } from 'react-router-dom'
+import { Link, useHistory } from 'react-router-dom'
 import Title from '../../components/Title'
+import { api } from '../../service/api'
+import { useAuth } from '../../context/auth'
 import './login.css'
 
 interface LoginData {
@@ -14,12 +16,21 @@ interface LoginData {
 }
 
 function Login() {
+  const auth = useAuth()
+  const history = useHistory()
   const { register, handleSubmit, errors } = useForm<LoginData>({
     resolver: yupResolver(schema)
   })
 
-  function onFormSubmit(data: LoginData) {
-    console.log('data', data)
+  async function onFormSubmit(data: LoginData) {
+    try {
+      const response = await api.post('/login', data)
+
+      auth.signIn(response.data)
+      history.push('/dashboard')
+    } catch(catchedError) {
+      console.log(catchedError.message)
+    }
   }
 
   return (
