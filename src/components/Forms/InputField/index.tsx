@@ -35,7 +35,7 @@ const InputField: ForwardRefRenderFunction<HTMLInputElement, InputFieldProps> = 
       input.className = 'error'
       setFieldError({
         type: 'required',
-        message: 'Required Field'
+        message: 'Campo obrigatório.'
       })
     }
   }

@@ -1,0 +1,38 @@
+.register-container {
+  --container-size: 500px;
+  max-width: var(--container-size);
+  margin: auto;
+  display: flex;
+  justify-content: center;
+}
+
+.register-container ~ header {
+  margin-top: 40px;
+}
+
+.register-form {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: auto;
+  gap: 20px;
+}
+
+.register-form .input-container {
+  margin: auto;
+  width: 70vw;
+  margin: 0 auto;
+}
+
+.privacy-terms-label {
+  display: block;
+  margin-bottom: 20px;
+  cursor: pointer;
+}
+
+.privacy-terms-label input {
+  margin-right: 10px;
+}
+
+.privacy-terms-label span {
+  font-size: 0.9rem;
+}
