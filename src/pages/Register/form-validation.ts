@@ -9,7 +9,7 @@ const schema = yup.object().shape({
   username: yup.string()
     .trim()
     .required('Campo obrigatório.'),
-  birthday: yup.date()
+  birthday: yup.string()
     .required('Campo obrigatório.'),
   password: yup.string()
       .required('Campo obrigatório.'),

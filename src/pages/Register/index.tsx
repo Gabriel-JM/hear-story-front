@@ -33,10 +33,9 @@ function Register() {
     ;
 
     try {
-      const response = await api.post('/signup', data)
+      const response = await api.post('/register', data)
 
-      console.log(response)
-      history.push('/')
+      response.ok && history.push('/')
     } catch(err) {
       console.log(err)
     }
