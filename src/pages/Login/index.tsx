@@ -26,8 +26,10 @@ function Login() {
     try {
       const response = await api.post('/login', data)
 
-      auth.signIn(response.data)
-      history.push('/dashboard')
+      if(response.ok && response.data.token) {
+        auth.signIn(response.data)
+        history.push('/dashboard')
+      }
     } catch(catchedError) {
       console.log(catchedError.message)
     }

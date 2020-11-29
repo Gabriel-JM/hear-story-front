@@ -5,7 +5,7 @@ import React, {
   useEffect,
   useState
 } from 'react'
-import jwt from 'jsonwebtoken'
+import { api } from '../service/api'
 
 interface User {
   name: string
@@ -33,14 +33,24 @@ export function AuthProvider({ children }: AuthProviderProps) {
   const [user, setUser] = useState({} as User)
 
   useEffect(() => {
-    function checkAuth() {
-      if(localStorage.getItem('hear-story@token')) {
-        const payload = jwt.decode(
-          localStorage.getItem('hear-story@token') as string,
-          { complete: true }
-        )
-
-        console.log(payload)
+    async function checkAuth() {
+      try {
+        if(localStorage.getItem('hear-story@token')) {
+          const token = localStorage.getItem('hear-story@token')
+          const response = await api.post('/login/refresh', { token })
+  
+          if(response.data.id) {
+            setIsAuth(true)
+            setUser(response.data)
+          } else {
+            setIsAuth(false)
+            setUser({} as User)
+          }
+        }
+      } catch(catchedError) {
+        setIsAuth(false)
+        setUser({} as User)
+        console.warn(catchedError)
       }
     }
 
