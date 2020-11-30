@@ -1,0 +1,14 @@
+.dashboard-container {
+  --container-size: 500px;
+
+  max-width: var(--container-size);
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.dashboard-content {
+  margin-top: 50px;
+}

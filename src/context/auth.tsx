@@ -1,10 +1,12 @@
 import React, {
   createContext,
   ReactElement,
+  useCallback,
   useContext,
   useEffect,
   useState
 } from 'react'
+import { useHistory } from 'react-router-dom'
 import { api } from '../service/api'
 
 interface User {
@@ -31,6 +33,13 @@ export const useAuth = () => useContext(AuthContext)
 export function AuthProvider({ children }: AuthProviderProps) {
   const [isAuth, setIsAuth] = useState<boolean>(false)
   const [user, setUser] = useState({} as User)
+  const history = useHistory()
+
+  const withdrawUser = useCallback(() => {
+    setIsAuth(false)
+    setUser({} as User)
+    history.push('/')
+  }, [history])
 
   useEffect(() => {
     async function checkAuth() {
@@ -42,20 +51,19 @@ export function AuthProvider({ children }: AuthProviderProps) {
           if(response.data.id) {
             setIsAuth(true)
             setUser(response.data)
+            history.push('/dashboard')
           } else {
-            setIsAuth(false)
-            setUser({} as User)
+            withdrawUser()
           }
         }
       } catch(catchedError) {
-        setIsAuth(false)
-        setUser({} as User)
+        withdrawUser()
         console.warn(catchedError)
       }
     }
 
     checkAuth()
-  }, [])
+  }, [history, withdrawUser])
 
   function signIn(user: User) {
     localStorage.setItem('hear-story@token', user.token)
@@ -65,8 +73,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
   function signOut() {
     localStorage.removeItem('hear-story@token')
-    setIsAuth(false)
-    setUser({} as User)
+    withdrawUser()
   }
 
   const auth = {

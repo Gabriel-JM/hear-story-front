@@ -1,11 +1,20 @@
 import React from 'react'
-import { useAuth } from '../../context/auth'
+import { Link } from 'react-router-dom'
+import AuthedTitle from '../../components/AuthedTitle'
+
+import './dashboard.css'
 
 function Dashboard() {
-  const authValue = useAuth()
-
   return (
-    <p>Bem vindo, {authValue.user.name}!</p>
+    <section className="dashboard-container">
+      <AuthedTitle />
+
+      <div className="dashboard-content">
+        <Link to="/categorias">
+          <button className="btn secondary">Categorias</button>
+        </Link>
+      </div>
+    </section>
   )
 }
 
