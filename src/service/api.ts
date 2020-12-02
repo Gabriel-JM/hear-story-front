@@ -7,6 +7,14 @@ export const api = {
 
   post(url: string, content: object, customHeaders?: RequestInit) {
     return request(prefix + url, 'post', content, customHeaders)
+  },
+
+  put(url: string, content: object, customHeaders?: RequestInit) {
+    return request(prefix + url, 'put', content, customHeaders)
+  },
+
+  delete(url: string, customHeaders?: RequestInit) {
+    return request(prefix + url, 'delete', undefined, customHeaders)
   }
 }
 

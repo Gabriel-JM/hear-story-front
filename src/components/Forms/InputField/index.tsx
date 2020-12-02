@@ -31,13 +31,13 @@ const InputField: ForwardRefRenderFunction<HTMLInputElement, InputFieldProps> = 
       return
     }
     
-    if(!input.value && required) {
-      input.className = 'error'
-      setFieldError({
-        type: 'required',
-        message: 'Campo obrigatório.'
-      })
-    }
+    // if(!input.value && required) {
+    //   input.className = 'error'
+    //   setFieldError({
+    //     type: 'required',
+    //     message: 'Campo obrigatório.'
+    //   })
+    // }
   }
 
   function handleOnInput(event: FormEvent<HTMLInputElement>) {

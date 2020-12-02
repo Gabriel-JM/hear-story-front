@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import AuthedTitle from '../../components/AuthedTitle'
 import InputField from '../../components/Forms/InputField'
@@ -7,7 +7,7 @@ import { api } from '../../service/api'
 import { getInputFieldError } from '../../utils'
 import './categories.css'
 
-interface Categories {
+export interface Categories {
   id: number
   name: string
   color: string
@@ -15,7 +15,11 @@ interface Categories {
 
 function Categories() {
   const { user } = useAuth()
+  const formRef = useRef<HTMLFormElement>(
+    document.querySelector('.categories-form') as HTMLFormElement
+  )
   const { register, handleSubmit, errors } = useForm<Categories>()
+  const [currentId, setCurrentId] = useState<number | null>(null)
   const [categories, setCategories] = useState<Categories[]>([])
   const [isFormOpen, setIsFormOpen] = useState(false)
   const [color, setColor] = useState('#000000')
@@ -34,20 +38,66 @@ function Categories() {
     return () => { mount = false }
   }, [])
 
-  async function onSubmitForm(data: Categories) {
+  async function onSubmitForm(formData: Categories) {
     try {
-      const response = await api.post('/categories', {
-        ...data,
+      const data = {
+        ...formData,
+        id: currentId,
         user: user.id
-      })
+      }
+
+      const response = currentId
+        ? ( await api.put(`/categories/${currentId}`, data) )
+        : ( await api.post('/categories', data) )
 
       if(response.ok) {
-        setCategories(prev => [...prev, response.data])
+        !currentId
+          ? setCategories(prev => [...prev, response.data])
+          : setCategories(prev => {
+            const item = prev.find(item => item.id === currentId)
+            Object.assign(item, data)
+            return prev
+          })
         setIsFormOpen(false)
       }
     } catch(catchedError) {
       console.log(catchedError.message)
     }
+  }
+
+  function setDataForEdit(category: Categories) {
+    setCurrentId(category.id)
+    setIsFormOpen(true)
+    const form = formRef.current as HTMLFormElement
+    (form
+      .querySelector('input[name=name]') as HTMLInputElement
+    ).value = category.name
+    form.color.value = category.color
+    setColor(category.color)
+  }
+
+  async function removeItem(id: number) {
+    try {
+      const response = await api.delete(`/categories/${id}`)
+
+      if(response.ok && response.data.success) {
+        setCategories(prev => {
+          return prev.filter(item => item.id !== id)
+        })
+        console.log(response.data.message)
+      } else {
+        console.log(response.data)
+      }
+    } catch(catchedError) {
+      console.log(catchedError.message)
+    }
+  }
+
+  function resetForm() {
+    formRef.current.color.value = '#000000'
+    setColor('#000000')
+    const nameInput = formRef.current.querySelector('input[name=name]') as HTMLInputElement
+    nameInput.value = ''
   }
 
   return (
@@ -61,16 +111,29 @@ function Categories() {
       <div className="categories-content">
         <button
           className="btn primary"
-          onClick={() => setIsFormOpen(!isFormOpen)}
+          onClick={() => {
+            setCurrentId(null)
+            setIsFormOpen(!isFormOpen)
+            resetForm()
+          }}
         >
           + Categoria
         </button>
 
         <form
+          ref={formRef}
           onSubmit={handleSubmit(onSubmitForm)}
           className={`categories-form ${isFormOpen ? 'open' : ''}`}
         >
-          <div>
+          <div>          
+            <InputField
+              className="name-input"
+              label="Nome"
+              name="name"
+              required
+              ref={register({ required: true })}
+              errors={getInputFieldError(errors.name)}
+            />
             <label className="color-input-container">
               <span>Cor</span>
               <input
@@ -89,15 +152,7 @@ function Categories() {
                   ref={register()}
                 />
               </label>  
-            </label>          
-            <InputField
-              className="name-input"
-              label="Nome"
-              name="name"
-              required
-              ref={register({ required: true })}
-              errors={getInputFieldError(errors.name)}
-            />
+            </label>
           </div>
 
           <div className="categories-form-actions">
@@ -106,6 +161,7 @@ function Categories() {
             </button>
             <button className="btn" onClick={e => {
               e.preventDefault()
+              setCurrentId(null)
               setIsFormOpen(false)
             }}>
               Cancelar
@@ -113,19 +169,33 @@ function Categories() {
           </div>
         </form>
 
-        {categories.length && (
+        {categories.length ? (
           categories.map(category => {
             return (
               <div
                 className="category-display"
                 key={category.id}
               >
-                <div style={{ backgroundColor: category.color }}></div>
-                <span>{category.name}</span>
+                <div className="category-info">
+                  <div
+                    className="color-square"
+                    style={{ backgroundColor: category.color }}
+                  ></div>
+                  <span>{category.name}</span>
+                </div>
+
+                <div className="category-actions">
+                  <button
+                    onClick={() => setDataForEdit(category)}
+                  >&#9998;</button>
+                  <button onClick={() => removeItem(category.id)}>
+                    &#10006;
+                  </button>
+                </div>
               </div>
             )
           })
-        )}
+        ) : null}
 
         {!categories.length && (
           <div className="no-categories">

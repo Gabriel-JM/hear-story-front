@@ -50,6 +50,7 @@
   width: 200px;
   display: flex;
   flex-wrap: wrap;
+  margin-left: 18px;
 }
 
 .color-input-container > span {
@@ -59,7 +60,7 @@
 }
 
 .color-input-container > input {
-  width: 70%;
+  width: 78%;
   background-color: transparent;
   border: 1px solid #777;
   padding: 10px 14px;
@@ -105,22 +106,36 @@
 
 .category-display {
   display: flex;
+  justify-content: space-between;
   align-items: center;
   border: 1px solid #999;
   border-radius: 5px;
   background-color: #e6e6e6;
   font-size: 1.1rem;
+  box-shadow: 0 1px 3px #3337;
 }
 
-.category-display > div {
+.category-display + .category-display {
+  margin: 18px 0;
+}
+
+.category-info {
+  display: flex;
+  align-items: center;
+}
+
+.category-info div.color-square {
   width: 35px;
   height: 35px;
   margin-right: 10px;
   border-radius: 4px 0 0 4px;
 }
 
-.category-display + .category-display {
-  margin: 18px 0;
+.category-actions button {
+  border: 0;
+  background-color: transparent;
+  font-size: 1.3rem;
+  margin: 0 10px;
 }
 
 .no-categories {
