@@ -2,6 +2,8 @@ import React, { useEffect, useRef, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import AuthedTitle from '../../components/AuthedTitle'
 import InputField from '../../components/Forms/InputField'
+import EditIcon from '../../components/Icons/edit-icon'
+import XIcon from '../../components/Icons/x-icon'
 import { useAuth } from '../../context/auth'
 import { api } from '../../service/api'
 import { getInputFieldError } from '../../utils'
@@ -187,9 +189,11 @@ function Categories() {
                 <div className="category-actions">
                   <button
                     onClick={() => setDataForEdit(category)}
-                  >&#9998;</button>
+                  >
+                    <EditIcon />
+                  </button>
                   <button onClick={() => removeItem(category.id)}>
-                    &#10006;
+                    <XIcon />
                   </button>
                 </div>
               </div>

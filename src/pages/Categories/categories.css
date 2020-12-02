@@ -135,7 +135,12 @@
   border: 0;
   background-color: transparent;
   font-size: 1.3rem;
-  margin: 0 10px;
+  margin: 0 8px;
+  cursor: pointer;
+}
+
+.category-actions button svg {
+  margin-top: 2px;
 }
 
 .no-categories {
