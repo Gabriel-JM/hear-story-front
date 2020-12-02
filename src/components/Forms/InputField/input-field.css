@@ -1,6 +1,6 @@
 .input-container {
   display: block;
-  width: fit-content;
+  width: 100%;
 }
 
 .input-container span {

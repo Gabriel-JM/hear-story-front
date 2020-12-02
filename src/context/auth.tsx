@@ -51,7 +51,10 @@ export function AuthProvider({ children }: AuthProviderProps) {
           if(response.data.id) {
             setIsAuth(true)
             setUser(response.data)
-            history.push('/dashboard')
+            
+            if(window.location.pathname === '/') {
+              history.push('/dashboard')
+            }
           } else {
             withdrawUser()
           }
