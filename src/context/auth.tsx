@@ -10,6 +10,7 @@ import { useHistory } from 'react-router-dom'
 import { api } from '../service/api'
 
 interface User {
+  id?: number
   name: string
   username: string
   token: string

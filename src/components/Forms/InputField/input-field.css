@@ -1,6 +1,5 @@
 .input-container {
   display: block;
-  width: 100%;
 }
 
 .input-container span {
@@ -29,7 +28,6 @@
 }
 
 .input-field input {
-  width: auto;
   padding: 10px 14px;
   border: 0;
   border-radius: 4px;
